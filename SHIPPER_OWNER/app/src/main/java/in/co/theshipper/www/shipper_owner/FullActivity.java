@@ -319,7 +319,7 @@ public class FullActivity extends AppCompatActivity implements GoogleApiClient.C
                 fragment = new RateCard();
                 break;
             case 4:
-                fragment = new CustomerEdit();
+                fragment = new OwnerEdit();
                 break;
             case 5:
                 fragment = new EmergencyContact();
@@ -335,13 +335,12 @@ public class FullActivity extends AppCompatActivity implements GoogleApiClient.C
                 break;
             default:
                 Toast.makeText(this,"haha",Toast.LENGTH_SHORT).show();
-                //fragment = new Book();
                 break;
 
         }
         transaction.replace(R.id.main_content, fragment, Constants.Config.CURRENT_FRAG_TAG);
-        if((homeFragmentIndentifier == -5)&&(!(fragment instanceof  Book))){
-            Fn.logD("fragment instanceof Book","called with homeFragmentIndentifier = "+String.valueOf(homeFragmentIndentifier));
+        if((homeFragmentIndentifier == -5)&&(!(fragment instanceof  MyTrucks))){
+            Fn.logD("fragment instanceof MyTrucks","called with homeFragmentIndentifier = "+String.valueOf(homeFragmentIndentifier));
             if(method.equals("push")) {
                 transaction.commit();
                 method = "";
@@ -352,7 +351,7 @@ public class FullActivity extends AppCompatActivity implements GoogleApiClient.C
             Fn.logD("homeFragmentIndentifier value",String.valueOf(homeFragmentIndentifier));
         }else{
             transaction.commit();
-            Fn.logD("fragment instanceof Book","homeidentifier != -1");
+            Fn.logD("fragment instanceof MyTrucks","homeidentifier != -1");
         }
 
     }

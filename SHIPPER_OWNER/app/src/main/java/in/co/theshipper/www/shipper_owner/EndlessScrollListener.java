@@ -16,7 +16,6 @@ public abstract class EndlessScrollListener implements AbsListView.OnScrollListe
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         this.currentScrollState = scrollState;
         this.isScrollCompleted();
-
     }
 
     private void isScrollCompleted() {
