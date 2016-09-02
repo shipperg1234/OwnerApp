@@ -3,8 +3,8 @@ package in.co.theshipper.www.shipper_owner;
 public final class Constants {
     public static final class Config{
 //        protected static final String ROOT_PATH = "http://theshipper.ml/";
-//        protected static final String ROOT_PATH = "http://theshipper.ml/loader_mobile/";
-        protected static final String ROOT_PATH = "http://www.theshipper.ml/loader_mobile/";
+        protected static final String ROOT_PATH = "http://theshipper.ml/loader_mobile/";
+//        protected static final String ROOT_PATH = "http://www.theshipper.co.in/loader_mobile/";
 //        public static final String ROOT_PATH = "http://52.77.190.248/";
         protected static final int UPDATE_CUSTOMER_LOCATION_DELAY = 0*10000;
         protected static final int UPDATE_CUSTOMER_LOCATION_PERIOD = 30*1000;
