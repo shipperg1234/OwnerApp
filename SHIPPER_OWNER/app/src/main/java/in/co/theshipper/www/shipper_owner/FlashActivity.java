@@ -80,7 +80,7 @@ public class FlashActivity extends AppCompatActivity implements GoogleApiClient.
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API)
                     .build();
-//            mGoogleApiClient.connect();
+            mGoogleApiClient.connect();
         }
     }
     @Override
@@ -172,7 +172,7 @@ public class FlashActivity extends AppCompatActivity implements GoogleApiClient.
         Fn.showProgressDialogLong(Constants.Message.CONNECTING,this);
 //        Log.d("TimerProgram", "TimerProgram");
         int delay = Constants.Config.DELAY_LOCATION_CHECK; // delay for 20 sec.
-        int period = Constants.Config.DELAY_LOCATION_CHECK; // repeat every 20 sec.
+        int period = Constants.Config.PERIOD_LOCATION_CHECK; // repeat every 20 sec.
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
