@@ -3,8 +3,11 @@ package in.co.theshipper.www.shipper_owner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,12 +19,12 @@ import java.util.HashMap;
 
 
 public class OtpVerification extends AppCompatActivity {
-    private  String TAG = OtpVerification.class.getName();
+    protected  String TAG = OtpVerification.class.getName();
     protected RequestQueue requestQueue;
-    private  EditText otp_value;
+    private EditText otp_value;
     private String entered_otp;
     private String OTP;
-    private Bundle b;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Fn.logW("OTP_PROFILE_ACTIVITY_LIFECYCLE", "onCreate called");
@@ -29,7 +32,7 @@ public class OtpVerification extends AppCompatActivity {
         setContentView(R.layout.activity_otp_verification);
         otp_value = (EditText) findViewById(R.id.editText2);
         if(getIntent().getExtras() != null) {
-            b = getIntent().getExtras();
+            Bundle b = getIntent().getExtras();
             OTP = String.valueOf(b.getInt("OTP"));
 //            Fn.Toast(this, String.valueOf(OTP));
         }
@@ -70,35 +73,34 @@ public class OtpVerification extends AppCompatActivity {
         Fn.logW("OTP_PROFILE_ACTIVITY_LIFECYCLE","onDestroy called");
     }
     public void verifyOtp(View view){
-        if(checkValidation()) {
+        if(checkValidation()){
 //            Fn.showProgressDialog(Constants.Message.LOADING,this);
             entered_otp = otp_value.getText().toString();
-            if (OTP.equals(entered_otp)) {
+            if(OTP.equals(entered_otp)){
                 String mobile_no = "";
-                String get_user_info_url = Constants.Config.ROOT_PATH + "get_customer_info";
-                Fn.logD("get_user_info_url", get_user_info_url);
-                mobile_no = Fn.getPreference(this, "mobile_no");
-                Fn.logD("mobile_no", mobile_no);
-                HashMap<String,String> hashMap = new HashMap<String, String>();
+                String get_user_info_url = Constants.Config.ROOT_PATH+"get_owner_info";
+                Fn.logD("get_user_info_url",get_user_info_url);
+                mobile_no =  Fn.getPreference(this,"mobile_no");
+                Fn.logD("mobile_no",mobile_no);
+                HashMap<String,String>  hashMap = new HashMap<String,String>();
                 hashMap.put("mobile_no", mobile_no);
-                sendVolleyRequest(get_user_info_url,Fn.checkParams(hashMap));
-
-            } else {
+                sendVolleyRequest(get_user_info_url, Fn.checkParams(hashMap));
+            }else{
                 Fn.showDialog(this,Constants.Title.OTP_VERIFICATION_ERROR,Constants.Message.OTP_VERIFICATION_ERROR);
             }
         }
         else {
-           Fn.Toast(this, Constants.Message.FORM_ERROR);
+            Toast.makeText(OtpVerification.this,Constants.Message.FORM_ERROR, Toast.LENGTH_LONG).show();
         }
-    }
 
+    }
     private boolean checkValidation() {
         boolean ret = true;
         if (!FormValidation.isValidOTP(otp_value, true)) ret = false;
+
         return ret;
     }
-
-    public void sendVolleyRequest(String URL, final HashMap<String,String> hMap){
+    protected void sendVolleyRequest(String URL, final HashMap<String,String> hMap){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -120,10 +122,7 @@ public class OtpVerification extends AppCompatActivity {
         stringRequest.setTag(TAG);
         Fn.addToRequestQue(requestQueue, stringRequest, this);
     }
-    private void ErrorDialog(String Title,String Message){
-        Fn.showDialog(this, Title, Message);
-    }
-    public void OtpVerificationSuccess(String response){
+    protected void OtpVerificationSuccess(String response){
         if(!Fn.CheckJsonError(response)){
             Intent intent = new Intent(this, EditProfile.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -133,4 +132,8 @@ public class OtpVerification extends AppCompatActivity {
             ErrorDialog(Constants.Title.SERVER_ERROR,Constants.Message.SERVER_ERROR);
         }
     }
+    private void ErrorDialog(String Title,String Message){
+        Fn.showDialog(this, Title, Message);
+    }
 }
+

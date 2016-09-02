@@ -7,10 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+
 import com.google.android.gms.gcm.GcmListenerService;
 
 /**
- * Created by GB on 12/7/2015.
+ * Created by Sahil- on 9/1/2016.
  */
 
 public class GcmMessageHandler extends GcmListenerService {

@@ -103,7 +103,7 @@ public class EditProfile extends AppCompatActivity {
             username = name.getText().toString();
             useremail = email.getText().toString();
             useraddress = address.getText().toString();
-            String edit_customer_profile_url = Constants.Config.ROOT_PATH + "edit_customer_profile";
+            String edit_customer_profile_url = Constants.Config.ROOT_PATH + "edit_owner_profile";
             Fn.logD("useraddress", useraddress);
             Fn.logD("useremail", useremail);
             Fn.logD("username", username);

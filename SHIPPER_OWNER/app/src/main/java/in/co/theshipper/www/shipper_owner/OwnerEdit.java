@@ -25,15 +25,15 @@ import java.util.HashMap;
 /**
  * Created by Shubham on 24/06/2016.
  */
-public class CustomerEdit extends Fragment{
-    protected  String TAG = CustomerEdit.class.getName();
+public class OwnerEdit extends Fragment{
+    protected  String TAG = OwnerEdit.class.getName();
     protected RequestQueue requestQueue;
     private View view;
     private EditText name,email,address;
     Button updateButton;
     private JSONObject jsonObject;
     private JSONArray jsonArray;
-    public CustomerEdit(){
+    public OwnerEdit(){
 
     }
     @Nullable
