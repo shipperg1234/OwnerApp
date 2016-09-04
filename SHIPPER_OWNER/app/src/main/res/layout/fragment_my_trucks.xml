@@ -47,7 +47,24 @@
                     </HorizontalScrollView>
                 </LinearLayout>
                 <LinearLayout
-                    style="@style/horizontal_LL.sm.1">                </LinearLayout>
+                    style="@style/horizontal_LL.sm.1"
+                    android:visibility="invisible"
+                    android:id="@+id/lowest_view">
+                    <LinearLayout
+                        style="@style/vertical_LL.sm.5">
+                        <TextView
+                            style="@style/highlighted_textview"
+                            android:id="@+id/driver_name">
+                        </TextView>
+                    </LinearLayout>
+                    <LinearLayout
+                        style="@style/vertical_LL.sm.6">
+                        <Button
+                            style="@style/full_screen_button"
+                            android:id="@+id/callButton"
+                            android:drawableLeft="@drawable/ic_support" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
         <TextView
