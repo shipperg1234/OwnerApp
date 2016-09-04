@@ -97,7 +97,6 @@ public class OtpVerification extends AppCompatActivity {
     private boolean checkValidation() {
         boolean ret = true;
         if (!FormValidation.isValidOTP(otp_value, true)) ret = false;
-
         return ret;
     }
     protected void sendVolleyRequest(String URL, final HashMap<String,String> hMap){
@@ -123,14 +122,14 @@ public class OtpVerification extends AppCompatActivity {
         Fn.addToRequestQue(requestQueue, stringRequest, this);
     }
     protected void OtpVerificationSuccess(String response){
-        if(!Fn.CheckJsonError(response)){
+        //if(!Fn.CheckJsonError(response)){
             Intent intent = new Intent(this, EditProfile.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra("JSON_STRING", response);
             startActivity(intent);
-        }else{
+        /*}else{
             ErrorDialog(Constants.Title.SERVER_ERROR,Constants.Message.SERVER_ERROR);
-        }
+        }*/
     }
     private void ErrorDialog(String Title,String Message){
         Fn.showDialog(this, Title, Message);

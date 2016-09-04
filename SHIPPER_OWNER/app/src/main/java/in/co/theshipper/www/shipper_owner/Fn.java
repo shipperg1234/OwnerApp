@@ -90,6 +90,7 @@ import java.util.TimeZone;
  * Created by GB on 3/4/2016.
  */
 public class Fn {
+    static protected ProgressDialog progressDialog;
     protected static void logD(String key, String value) {
         Log.d(key, value);
     }
@@ -244,7 +245,6 @@ public class Fn {
         }
     }
     protected static void showProgressDialog(String message,Context ctx){
-        final ProgressDialog progressDialog;
         progressDialog = new ProgressDialog(ctx);
         progressDialog.setMessage(message);
         progressDialog.setIndeterminate(true);
@@ -258,12 +258,14 @@ public class Fn {
         }, Constants.Config.PROGRESSBAR_DELAY);  // 3000 milliseconds
     }
     protected static void showProgressDialogLong(String message,Context ctx){
-        final ProgressDialog progressDialog;
         progressDialog = new ProgressDialog(ctx);
         progressDialog.setMessage(message);
         progressDialog.setIndeterminate(true);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
+    }
+    protected static void dismissProgressDialogLong(){
+        progressDialog.dismiss();
     }
     protected static String getDateTimeNow() {
         TimeZone tz = TimeZone.getTimeZone("GMT+05:30");

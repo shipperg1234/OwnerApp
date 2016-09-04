@@ -1,58 +1,60 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MyTrucks"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        style="@style/vertical_LL">
-        a
-        <!-- TODO: Update blank fragment layout -->
+    android:layout_height="match_parent"
+    android:layout_centerInParent="true"
+    tools:context=".MyTrucks">
+    <LinearLayout style="@style/vertical_LL">
         <LinearLayout
-            style="@style/horizontal_LL.sm.1"
-            android:id="@+id/location_found"
-            android:visibility="gone">
-            <TextView
-                style="@style/highlighted_textview"
-                android:id="@+id/location_datetime">
-            </TextView>
-        </LinearLayout>
-        <LinearLayout
-            style="@style/horizontal_LL.sm.8"
+            style="@style/horizontal_LL.sm.9"
             android:id="@+id/map"
-            android:visibility="gone">
+            >
         </LinearLayout>
         <LinearLayout
-            style="@style/horizontal_LL.sm.8"
-            android:id="@+id/map_view">
-        </LinearLayout>
-        <LinearLayout
-            style="@style/horizontal_LL.sm.2"
-            android:id="@+id/driver_found"
-            android:visibility="gone">
+            style="@style/horizontal_LL.sm.3"
+            android:id="@+id/lower_view">
             <LinearLayout
-                style="@style/vertical_LL.sm.1">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/driver_image" />
-            </LinearLayout>
-            <LinearLayout
-                style="@style/vertical_LL.sm.3">
+                style="@style/vertical_LL">
                 <LinearLayout
-                    style="@style/horizontal_LL.sm.1">
-                    <Button
-                        style="@style/full_screen_button"
-                        android:id="@+id/driver_mobile_no"
-                        android:drawableLeft="@drawable/ic_support"/>
+                    style="@style/horizontal_LL.sm.2">
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="none"
+                        >
+                        <RadioGroup
+                            style="@style/horizontal_LL"
+                            android:id="@+id/check_box_selector"
+                            android:gravity="center"
+                            >
+
+                            <!--<RadioButton android:id="@+id/checkbox2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:button="@drawable/abc_checkbox_vehicle_1"
+                                />
+                            <RadioButton android:id="@+id/checkbox3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:button="@drawable/abc_checkbox_vehicle_1"
+                                />
+                            <RadioButton android:id="@+id/checkbox4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:button="@drawable/abc_checkbox_vehicle_1"
+                                />-->
+                        </RadioGroup>
+                    </HorizontalScrollView>
                 </LinearLayout>
                 <LinearLayout
-                    style="@style/horizontal_LL.sm.1">
-                    <TextView
-                        style="@style/highlighted_textview"
-                        android:id="@+id/driver_name">
-                    </TextView>
-                </LinearLayout>
+                    style="@style/horizontal_LL.sm.1">                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+        <TextView
+            style="@style/horizontal_LL.sm.1"
+            android:visibility="gone"
+            android:gravity="center"
+            android:id="@+id/error_message">
+        </TextView>
     </LinearLayout>
 </FrameLayout>
