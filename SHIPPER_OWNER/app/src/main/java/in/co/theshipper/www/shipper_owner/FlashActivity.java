@@ -65,6 +65,8 @@ public class FlashActivity extends AppCompatActivity implements GoogleApiClient.
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     GoogleApiClient mGoogleApiClient;
 
+    //a little check
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
