@@ -6,7 +6,26 @@
     tools:context=".MyTrucks">
     <LinearLayout style="@style/vertical_LL">
         <LinearLayout
-            style="@style/horizontal_LL.sm.9"
+            style="@style/horizontal_LL.sm.1">
+            <LinearLayout
+                style="@style/edittext_fragment"
+                android:id="@+id/location_container"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/padding_5_dp"
+                android:layout_marginTop="@dimen/padding_5_dp"
+                android:layout_marginRight="@dimen/padding_5_dp"
+                android:layout_marginBottom="@dimen/padding_5_dp">
+                <fragment
+                    android:id="@+id/search_location"
+                    android:tag="location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            style="@style/horizontal_LL.sm.8"
             android:id="@+id/map"
             >
         </LinearLayout>

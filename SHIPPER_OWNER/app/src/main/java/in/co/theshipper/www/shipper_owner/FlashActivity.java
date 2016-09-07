@@ -113,7 +113,7 @@ public class FlashActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onResume()
     {
         super.onResume();
-        Fn.logE("FLASH_ACTIVITY_LIFECYCLE", "onResume");
+        Fn.logE("Flash_ACTIVITY_LIFECYCLE", "onResume");
         stopTimer = false;
         mGoogleApiClient.connect();
         Fn.logE("google_connected", "true");
@@ -226,8 +226,9 @@ public class FlashActivity extends AppCompatActivity implements GoogleApiClient.
         return true;
     }
     protected void NextActivity(){
+        Fn.dismissProgressDialogLong();
         String user_token = Fn.getPreference(this, "user_token");
-        Fn.SystemPrintLn("FalshActivity_user_token" + user_token);
+        Fn.SystemPrintLn("FlashActivity_user_token" + user_token);
         if (!user_token.equals("defaultStringIfNothingFound")) {
             Intent intent1 = new Intent(this, FullActivity.class);
             intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

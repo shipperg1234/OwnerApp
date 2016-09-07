@@ -8,6 +8,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationListener;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -42,11 +43,17 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONArray;
@@ -71,10 +78,12 @@ public class MyTrucks extends Fragment implements View.OnClickListener,GoogleMap
 
     protected final String get_vehicle_url = Constants.Config.ROOT_PATH+"my_trucks";
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
+    private PlaceAutocompleteFragment search_location;
     protected RequestQueue requestQueue;
     protected HashMap<String,String> hashMap;
     private View view;
-    private String user_token;
+    private String user_token,location_address,location_name;
+    private LatLng southwest,northeast;
     private String TAG = FullActivity.class.getName();
     private boolean stopTimer = false;
     private Location location;
@@ -126,6 +135,37 @@ public class MyTrucks extends Fragment implements View.OnClickListener,GoogleMap
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Fn.logD("onViewCreated", "onViewCreated");
+        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_NONE)
+                .build();
+        if (search_location == null) {
+            Fn.logD("SEARCH_LOCATION_FRAGMENT", "autocompleteFragment_null");
+            search_location = (PlaceAutocompleteFragment) getActivity().getFragmentManager().findFragmentById(R.id.search_location);
+            search_location.setHint(getResources().getString(R.string.search_location));
+            Fn.logD("search_location_fragment", String.valueOf(search_location));
+            search_location.setFilter(typeFilter);
+            if ((southwest != null)) {
+                Fn.SystemPrintLn("******haha**my curn loc is : " + southwest.longitude + " " + southwest.latitude);
+                search_location.setBoundsBias(new LatLngBounds(southwest, northeast));
+            }
+            search_location.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+                @Override
+                public void onPlaceSelected(Place place) {
+                    location_name = (String) place.getName();
+                    location_address = (String) place.getAddress();
+                    LatLng latLng = place.getLatLng();
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));//Moves the camera to users current longitude and latitude
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, Constants.Config.MAP_SMALL_ZOOM_LEVEL));
+                }
+
+                @Override
+                public void onError(Status status) {
+                    Fn.logD("SEARCH_LOCATION_FRAGMENT", "onError");
+                    // TODO: Handle the error.
+                    Fn.logD("SEARCH_LOCATION_FRAGMENT", "An error occurred: " + status);
+                }
+            });
+        }
         mMapFragment = SupportMapFragment.newInstance();
         getChildFragmentManager().beginTransaction().replace(R.id.map, mMapFragment, "MAP_FRAGMENT").commit();
         TimerProgramm();
@@ -156,9 +196,9 @@ public class MyTrucks extends Fragment implements View.OnClickListener,GoogleMap
                     @Override
                     public void onClick(View v) {
                         vehicle_type =id[(int) (cnt- finalCount)];
-//                        Toast.makeText(context, "vehicle type" + vehicle_type, Toast.LENGTH_LONG).show();
                         mMap.clear();
                         lowest_view.setVisibility(View.INVISIBLE);
+                        search_location.setText("");
                         LocationChanged();
                     }
                 });
@@ -173,7 +213,7 @@ public class MyTrucks extends Fragment implements View.OnClickListener,GoogleMap
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.callButton:
-                Fn.logD("BOOKING_DETAILS_FRAGMENT_LIFECYCLE", "onClick Called");
+                Fn.logD("MY_TRUCKS_FRAGMENT_LIFECYCLE", "onClick Called");
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:" + callButton.getText().toString()));
                 callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -211,6 +251,7 @@ public class MyTrucks extends Fragment implements View.OnClickListener,GoogleMap
                             location = Fn.getAccurateCurrentlocation(FullActivity.mGoogleApiClient, getActivity());
                         } while (location == null);
                         if (location != null) {
+                            Fn.logD("location", "not null");
                             LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());// This methods gets the users current longitude and latitude.
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));//Moves the camera to users current longitude and latitude
                             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, Constants.Config.MAP_SMALL_ZOOM_LEVEL));//Animates camera and zooms to preferred state on the user's current location.
@@ -243,7 +284,6 @@ public class MyTrucks extends Fragment implements View.OnClickListener,GoogleMap
         }, Constants.Config.GET_DRIVER_LOCATION_DELAY, Constants.Config.GET_DRIVER_LOCATION_PERIOD);
     }
     public void LocationChanged() {
-        //bookLater.setEnabled(true);
         try {
             if(FullActivity.mGoogleApiClient.isConnected()) {
                 Fn.logD("mGoogleApiClient", "true");
@@ -256,6 +296,9 @@ public class MyTrucks extends Fragment implements View.OnClickListener,GoogleMap
                     Fn.logD("location_not_null", "location_not_null");
                     lattitude = location.getLatitude();
                     longitude = location.getLongitude();
+                    LatLng latlng = new LatLng(lattitude, longitude);
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));//Moves the camera to users current longitude and latitude
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, Constants.Config.MAP_SMALL_ZOOM_LEVEL));
                     user_token = Fn.getPreference(getActivity(), "user_token");
                     HashMap<String, String> hashMap = new HashMap<String, String>();
                     hashMap.put("vehicle_type", String.valueOf(vehicle_type));
@@ -281,6 +324,7 @@ public class MyTrucks extends Fragment implements View.OnClickListener,GoogleMap
             @Override
             public void onResponse(String response) {
                 Fn.logD("onResponse", String.valueOf(response));
+                timer.cancel();
                 vehicleFindSuccess(response);
             }
         }, new Response.ErrorListener() {

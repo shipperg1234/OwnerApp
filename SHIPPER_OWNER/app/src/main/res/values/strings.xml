@@ -29,6 +29,7 @@
     <string name="hint_email">Your Email</string>
     <string name="hint_postal_address">Your Address</string>
     <string name="hint_otp">6 Digit OTP</string>
+    <string name="search_location">Search location</string>
     <string name="hint_pickup_point">Enter Pickup Point</string>
     <string name="hint_dropoff_point">Enter Dropoff Point</string>
 
