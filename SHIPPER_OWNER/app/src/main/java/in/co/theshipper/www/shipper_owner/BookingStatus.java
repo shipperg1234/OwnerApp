@@ -102,7 +102,7 @@ public class BookingStatus extends Fragment implements ActionBar.TabListener{
             Fragment fragment = null;
             switch(position){
                 case 0:
-                fragment = new CurrentBooking();
+                    fragment = new CurrentBooking();
                     break;
                 case 1:
                     fragment = new FutureBooking();
