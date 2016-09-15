@@ -6,4 +6,5 @@
     <item type="id" name="vehicle_type" />
     <item type="id" name="large_text" />
     <item type="id" name="loader_string_id" />
+    <item name="vehicle_id" type="id" />
 </resources>

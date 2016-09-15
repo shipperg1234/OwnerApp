@@ -170,6 +170,7 @@
     <string name="title_my_trucks_fragment">My Trucks</string>
     <string name="title_book_fragment">Book A Truck</string>
     <string name="title_drivers_fragment">Drivers</string>
+    <string name="title_driver_details_fragment">Driver Details</string>
     <string name="title_book_now_fragment">Book Now</string>
     <string name="title_book_later_fragment">Book Later</string>
     <string name="title_confirm_booking_fragment">Confirm Booking</string>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_height="120dp"
+android:layout_width="match_parent"
+android:orientation="horizontal">
+<LinearLayout
+    style="@style/vertical_LL.sm.1">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vehicle_image"/>
+</LinearLayout>
+<LinearLayout
+    style="@style/vertical_LL.sm.4">
+    <LinearLayout
+        style="@style/horizontal_LL.sm.2">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/medium_text_size"
+            android:id="@+id/driver_name"/>
+    </LinearLayout>
+    <LinearLayout
+        style="@style/horizontal_LL.sm.2">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/semi_medium_text_size"
+            android:id="@+id/vehicle_no"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/small_text_size"
+            android:id="@+id/driver_token"
+            android:visibility="invisible"/>
+    </LinearLayout>
+</LinearLayout>
+</LinearLayout>
