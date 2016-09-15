@@ -181,7 +181,7 @@
     <string name="title_about_fragment">T&amp;C</string>
 
     <string name="title_current_booking_fragment">Current Booking</string>
-    <string name="title_current_booking_deatil_fragment">Current Booking Detail</string>
+    <string name="title_current_booking_detail_fragment">Current Booking Detail</string>
     <string name="title_future_booking_fragment">Future Booking</string>
     <string name="title_future_booking_detail_fragment">Future Booking Detail</string>
     <string name="title_finished_booking_fragment">Finished Bookings</string>
