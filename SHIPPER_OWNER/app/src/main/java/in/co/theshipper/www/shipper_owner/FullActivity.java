@@ -305,7 +305,9 @@ public class FullActivity extends AppCompatActivity implements GoogleApiClient.C
        //FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();// For AppCompat use getSupportFragmentManager
         switch(position) {
-
+            default:
+                fragment = new MyTrucks();
+                break;
             case 0:
                 fragment = new MyTrucks();
                 break;
@@ -333,10 +335,6 @@ public class FullActivity extends AppCompatActivity implements GoogleApiClient.C
             case 9:
                 fragment = new FinishedBookingDetail();
                 break;
-            default:
-                Toast.makeText(this,"haha",Toast.LENGTH_SHORT).show();
-                break;
-
         }
         transaction.replace(R.id.main_content, fragment, Constants.Config.CURRENT_FRAG_TAG);
         if((homeFragmentIndentifier == -5)&&(!(fragment instanceof  MyTrucks))){
