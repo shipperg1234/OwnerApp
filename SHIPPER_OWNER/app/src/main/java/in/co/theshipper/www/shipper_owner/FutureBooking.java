@@ -76,12 +76,13 @@ public class FutureBooking extends Fragment  {
 
     private void createRequest(final int page_no){
         final String user_token = Fn.getPreference(getActivity(),"user_token");
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.Config.ROOT_PATH+"future_booking_list",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.Config.ROOT_PATH+"owner_future_booking_list",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         //Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
                         Fn.logD("Response for FUTURE_BOOKING_FRAGMENT recieved",response);
+                        Fn.logD("Response for FUTURE recieved", response);
                         uiUpdate(response);
                     }
                 },
