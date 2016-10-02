@@ -141,9 +141,9 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
             @Override
             public void onResponse(String response) {
                 Fn.logD("onResponse_booking_status", String.valueOf(response));
-                if(method.equals("booking_status")) {
-                    Fn.logD("booking_status","booking_status");
-                    bookingStatusSuccess(response);
+                if(method.equals("my_driver_details")) {
+                    Fn.logD("my_driver_details","my_driver_details");
+                   driverDetailsSuccess(response);
                 }else if (method.equals("vehicle_location")) {
                     Fn.logD("vehicle_location","vehicle_location");
                     vehicleLocationSuccess(response);
@@ -167,7 +167,7 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
         stringRequest.setTag(TAG);
         Fn.addToRequestQue(requestQueue, stringRequest, getActivity());
     }
-    protected void bookingStatusSuccess(String response){
+    protected void driverDetailsSuccess(String response){
         Fn.logD("DRIVER_DETAILS_FRAGMENT_LIFECYCLE", "bookingStatusSuccess Called");
         if(!Fn.CheckJsonError(response)){
 //            Fn.logD("bookingStatusSuccess", "bookingStatusSuccess Called");

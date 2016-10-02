@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerInParent="true"
-    tools:context=".MyTrucks">
+    tools:context="in.co.theshipper.www.shipper_owner.MyTrucks">
     <LinearLayout style="@style/vertical_LL">
         <LinearLayout
             style="@style/horizontal_LL.sm.1">

@@ -120,6 +120,7 @@ public class MyTrucks extends Fragment implements View.OnClickListener,GoogleMap
         if (container == null) {
             return null;
         } else {
+
             view = inflater.inflate(R.layout.fragment_my_trucks, container, false);
             radiogrp = (RadioGroup) view.findViewById(R.id.check_box_selector);
             error_message = (TextView) view.findViewById(R.id.error_message);
