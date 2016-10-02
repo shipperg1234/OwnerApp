@@ -1,16 +1,16 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".BookingDetails"
+    tools:context=".DriverDetails"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
         style="@style/vertical_LL">
-        a
+
         <!-- TODO: Update blank fragment layout -->
         <LinearLayout
             style="@style/horizontal_LL.sm.1"
             android:id="@+id/location_found"
-            android:visibility="gone">
+            android:visibility="visible">
             <TextView
                 style="@style/highlighted_textview"
                 android:id="@+id/location_datetime">
@@ -18,8 +18,7 @@
         </LinearLayout>
         <LinearLayout
             style="@style/horizontal_LL.sm.8"
-            android:id="@+id/map"
-            android:visibility="gone">
+            android:id="@+id/map">
         </LinearLayout>
         <LinearLayout
             style="@style/horizontal_LL.sm.8"
@@ -28,16 +27,16 @@
         <LinearLayout
             style="@style/horizontal_LL.sm.2"
             android:id="@+id/driver_found"
-            android:visibility="gone">
-            <LinearLayout
-                style="@style/horizontal_LL.sm.1">
-                <TextView
-                    style="@style/highlighted_textview"
-                    android:id="@+id/driver_name">
-                </TextView>
-            </LinearLayout>
+            android:visibility="visible">
             <LinearLayout
                 style="@style/vertical_LL.sm.3">
+                <LinearLayout
+                    style="@style/horizontal_LL.sm.1">
+                    <TextView
+                        style="@style/highlighted_textview"
+                        android:id="@+id/driver_name">
+                    </TextView>
+                </LinearLayout>
                 <LinearLayout
                     style="@style/horizontal_LL.sm.1">
                     <Button

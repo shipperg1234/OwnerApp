@@ -128,7 +128,6 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
         String driver_details_url = Constants.Config.ROOT_PATH+"my_driver_details";
         Fn.logD("driver_details_url", driver_details_url);
         HashMap<String,String> hashMap= new HashMap<String,String>();
-        String driver_token = Fn.getPreference(getActivity(),"driver_token");
         hashMap.put("driver_token",driver_token);
         sendVolleyRequest(driver_details_url, Fn.checkParams(hashMap), "my_driver_details");
     }
@@ -179,6 +178,8 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
                 jsonObject = new JSONObject(response);
                 String errFlag = jsonObject.getString("errFlag");
                 if(errFlag.equals("1")){
+                    ErrorDialog(Constants.Title.SERVER_ERROR, Constants.Message.SERVER_ERROR);
+//            Fn.ToastShort(getActivity(), Constants.Message.NETWORK_ERROR);
                     Fn.logD("toastNotdone","toastNotdone");
                 }
                 else if(errFlag.equals("0"))
@@ -212,9 +213,9 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
 
 //                                Fn.logD("received_driver_current_lat", received_driver_current_lat);
 //                                Fn.logD("received_driver_current_lng", received_driver_current_lng);
-                                location_datetime.setText("Last Seen: "+Fn.getDateName(received_driver_location_datetime));
+                                location_datetime.setText("Last Seen: "+ Fn.getDateName(received_driver_location_datetime));
                                 location_found_view.setVisibility(View.VISIBLE);
-                                driver_name_view.setText("Driver: "+received_driver_name);
+                                driver_name_view.setText("Driver: "+ received_driver_name);
                                 callButton.setText(received_driver_mobile_no);
                                 driver_found_view.setVisibility(View.VISIBLE);
                                 location_found_view.setVisibility(View.VISIBLE);
@@ -234,9 +235,6 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }else{
-            ErrorDialog(Constants.Title.SERVER_ERROR, Constants.Message.SERVER_ERROR);
-//            Fn.ToastShort(getActivity(), Constants.Message.NETWORK_ERROR);
         }
     }
     protected void vehicleLocationSuccess(String response){
@@ -253,6 +251,7 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
                 String errFlag = jsonObject.getString("errFlag");
 //                errMsg = jsonObject.getString("errMsg");
                 if(errFlag.equals("1")){
+                    Fn.ToastShort(getActivity(), Constants.Message.SERVER_ERROR);
                     Fn.logD("toastNotdone","toastNotdone");
                 }
                 else if(errFlag.equals("0"))
@@ -279,8 +278,6 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }else{
-            Fn.ToastShort(getActivity(), Constants.Message.SERVER_ERROR);
         }
     }
     @Override
