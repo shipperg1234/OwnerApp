@@ -62,7 +62,7 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
     protected RequestQueue requestQueue;
     private String TAG = DriverDetails.class.getName();
     protected View view;
-    private LinearLayout map_view,map;
+    private LinearLayout map_view,map,location_found_view, driver_found_view;
     private Button callButton;
     private SupportMapFragment mMapFragment;
     private GoogleMap mMap=null;
@@ -71,22 +71,21 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
     private Location location;
     private String received_driver_current_lat,received_driver_current_lng;
     private String driver_token="";
-    private TextView location_datetime;
+    private TextView location_datetime, driver_name_view;
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
     private Dialog dialog;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         Fn.logD("DRIVER_DETAILS_FRAGMENT_LIFECYCLE", "onAttach Called");
     }
-
     public DriverDetails(){
         // Required empty public constructor
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_driver_details, container, false);
         Fn.logD("DRIVER_DETAILS_FRAGMENT_LIFECYCLE", "onCreateView Called");
         if((getActivity().getIntent()!=null)&&(getActivity().getIntent().getExtras()!=null)) {
             Fn.logD("getActivity().getIntent().getExtras()","getActivity().getIntent().getExtras()");
@@ -100,16 +99,18 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
             Bundle bundle = this.getArguments();
             driver_token = Fn.getValueFromBundle(bundle,"driver_token");
             Fn.logD("received_driver_token_argument",driver_token);
-
         }
         Fn.logD("bundle_driver_token", driver_token);
         Fn.SystemPrintLn(driver_token);
 //        Fn.logD("booking_status_url",booking_status_url);
-        view = inflater.inflate(R.layout.fragment_driver_details, container, false);
+
         map_view = (LinearLayout) view.findViewById(R.id.map_view);
         map = (LinearLayout) view.findViewById(R.id.map);
+        location_found_view = (LinearLayout) view.findViewById(R.id.location_found);
+        driver_found_view = (LinearLayout) view.findViewById(R.id.driver_found);
         location_datetime = (TextView) view.findViewById(R.id.location_datetime);
         callButton = (Button) view.findViewById(R.id.driver_mobile_no);
+        driver_name_view = (TextView) view.findViewById(R.id.driver_name);
         callButton.setOnClickListener(this);
         dialog = new Dialog(getActivity());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -145,10 +146,10 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
                     Fn.logD("my_driver_details","my_driver_details");
                    driverDetailsSuccess(response);
                 }else if (method.equals("vehicle_location")) {
-                    Fn.logD("vehicle_location","vehicle_location");
+                    Fn.logD("vehicle_location", "vehicle_location");
                     vehicleLocationSuccess(response);
                 }else if(method.equals("draw_path")){
-                    Fn.logD("method","method");
+                    Fn.logD("method", "method");
                     drawPath(response);
                 }
             }
@@ -179,7 +180,6 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
                 String errFlag = jsonObject.getString("errFlag");
                 if(errFlag.equals("1")){
                     ErrorDialog(Constants.Title.SERVER_ERROR, Constants.Message.SERVER_ERROR);
-//            Fn.ToastShort(getActivity(), Constants.Message.NETWORK_ERROR);
                     Fn.logD("toastNotdone","toastNotdone");
                 }
                 else if(errFlag.equals("0"))
@@ -199,30 +199,27 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
                         {
                             Fn.logD("likes_entered", "likes_entered");
                             JSONObject JO = jsonArray.getJSONObject(count);
-
-                                LinearLayout location_found_view = (LinearLayout) view.findViewById(R.id.location_found);
-                                Fn.logD("DRIVER_DETAILS_FRAGMENT_LIFECYCLE","driver_found");
-                                LinearLayout driver_found_view = (LinearLayout) view.findViewById(R.id.driver_found);
+                            Fn.logD("DRIVER_DETAILS_FRAGMENT_LIFECYCLE","driver_found");
 //                                Button driver_mobile_no_view = (Button) view.findViewById(R.id.driver_mobile_no);
-                                TextView driver_name_view = (TextView) view.findViewById(R.id.driver_name);
-                                String received_driver_name = JO.getString("driver_name");
-                                String received_driver_mobile_no = JO.getString("driver_mobile_no");
-                                String received_driver_location_datetime = JO.getString("driver_location_datetime");
-                                received_driver_current_lat = JO.getString("driver_location_lat");
-                                received_driver_current_lng = JO.getString("driver_location_lng");
-
-//                                Fn.logD("received_driver_current_lat", received_driver_current_lat);
-//                                Fn.logD("received_driver_current_lng", received_driver_current_lng);
-                                location_datetime.setText("Last Seen: "+ Fn.getDateName(received_driver_location_datetime));
-                                location_found_view.setVisibility(View.VISIBLE);
-                                driver_name_view.setText("Driver: "+ received_driver_name);
-                                callButton.setText(received_driver_mobile_no);
-                                driver_found_view.setVisibility(View.VISIBLE);
-                                location_found_view.setVisibility(View.VISIBLE);
-                                map.setVisibility(View.VISIBLE);
-                                map_view.setVisibility(View.GONE);
-                                setUpMapIfNeeded();
-                                TimerProgramm();
+                            String received_driver_name = JO.getString("driver_name");
+                            String received_driver_mobile_no = JO.getString("driver_mobile_no");
+                            String received_driver_location_datetime = JO.getString("driver_location_datetime");
+                            received_driver_current_lat = JO.getString("driver_location_lat");
+                            received_driver_current_lng = JO.getString("driver_location_lng");
+                            Fn.logD("received_driver_name", received_driver_name);
+                            Fn.logD("received_driver_mobile_no", received_driver_mobile_no);
+                            Fn.logD("received_driver_location_datetime", received_driver_location_datetime);
+                            location_datetime.setText("Last Seen: " + Fn.getDateName(received_driver_location_datetime));
+                            location_found_view.setVisibility(View.VISIBLE);
+                            driver_name_view.setText("Driver: " + received_driver_name);
+                            callButton.setText(received_driver_mobile_no);
+                            driver_found_view.setVisibility(View.VISIBLE);
+                            location_found_view.setVisibility(View.VISIBLE);
+                            map.setVisibility(View.VISIBLE);
+                            map_view.setVisibility(View.GONE);
+                            setUpMapIfNeeded();
+                            TimerProgramm();
+                            count++;
                         }
                     }
                     else
@@ -266,10 +263,10 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
                             received_driver_current_lat = JO.getString("driver_location_lat");
                             received_driver_current_lng = JO.getString("driver_location_lng");
                             String received_driver_location_datetime = JO.getString("driver_location_datetime");
-                            location_datetime.setText("Last Seen: "+Fn.getDateName(received_driver_location_datetime));
+                            location_datetime.setText("Last Seen: " + Fn.getDateName(received_driver_location_datetime));
                             map.setVisibility(View.VISIBLE);
                             map_view.setVisibility(View.GONE);
-                            Fn.logD("LocationSuccessCallingMap","LocationSuccessCallingMap");
+                            Fn.logD("LocationSuccessCallingMap", "LocationSuccessCallingMap");
                             setUpMapIfNeeded();
                             count++;
                         }
@@ -469,7 +466,6 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
     @Override
     public void onStart() {
         super.onStart();
-//        setUpMapIfNeeded();
         Fn.logD("DRIVER_DETAILS_FRAGMENT_LIFECYCLE", "onStart Called");
     }
     //start of extra method

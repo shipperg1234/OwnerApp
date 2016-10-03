@@ -22,7 +22,8 @@
         </LinearLayout>
         <LinearLayout
             style="@style/horizontal_LL.sm.8"
-            android:id="@+id/map_view">
+            android:id="@+id/map_view"
+            android:visibility="visible">
         </LinearLayout>
         <LinearLayout
             style="@style/horizontal_LL.sm.2"
@@ -42,6 +43,7 @@
                     <Button
                         style="@style/full_screen_button"
                         android:id="@+id/driver_mobile_no"
+                        android:text="8276903952"
                         android:drawableLeft="@drawable/ic_support"/>
                 </LinearLayout>
             </LinearLayout>
