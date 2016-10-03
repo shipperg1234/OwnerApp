@@ -142,6 +142,8 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
             @Override
             public void onResponse(String response) {
                 Fn.logD("onResponse_booking_status", String.valueOf(response));
+                //TODO (for RITIKA CHATTERJEE )problem was in below line ,you had not changed method to my_driver_details ,earlier it wasd booking_status as mentioned in BookingDetails fragment, refer booking_details fragemtn on line 151
+
                 if(method.equals("my_driver_details")) {
                     Fn.logD("my_driver_details","my_driver_details");
                    driverDetailsSuccess(response);
@@ -268,6 +270,7 @@ public class DriverDetails extends android.support.v4.app.Fragment implements Vi
                             map_view.setVisibility(View.GONE);
                             Fn.logD("LocationSuccessCallingMap", "LocationSuccessCallingMap");
                             setUpMapIfNeeded();
+                            //TODO (for RITIKA CHATTERJEE )problem was in below line ,someone had deleted count++,that is why this loop was running infinite times
                             count++;
                         }
                     }
